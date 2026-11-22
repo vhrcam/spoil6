@@ -4,7 +4,7 @@ import { chromium } from 'playwright';
 export const extensionPath = fileURLToPath(new URL('../../extension', import.meta.url));
 
 export const launch = () => chromium.launchPersistentContext('', {
-  channel: 'chromium',
+  ...(process.env.BROWSER_PATH ? { executablePath: process.env.BROWSER_PATH } : { channel: 'chromium' }),
   headless: true,
   args: [`--disable-extensions-except=${extensionPath}`, `--load-extension=${extensionPath}`],
 });
