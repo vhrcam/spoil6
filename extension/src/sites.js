@@ -25,5 +25,26 @@
       ],
       detail: path => /\/status\/\d+/.test(path),
     },
+    {
+      id: 'youtube',
+      name: 'YouTube',
+      hosts: ['youtube.com'],
+      cards: [
+        {
+          sel: [
+            'ytd-rich-item-renderer', 'ytd-video-renderer', 'ytd-compact-video-renderer', 'ytd-grid-video-renderer',
+            'ytd-playlist-renderer', 'ytd-compact-playlist-renderer', 'ytd-radio-renderer', 'ytd-compact-radio-renderer',
+            'ytd-reel-item-renderer', 'ytm-shorts-lockup-view-model', 'ytm-shorts-lockup-view-model-v2', 'yt-lockup-view-model',
+            'ytd-channel-renderer', 'ytd-post-renderer', 'ytd-comment-view-model', 'ytd-comment-renderer',
+            'ytd-playlist-panel-video-renderer', 'ytd-notification-renderer', 'ytd-movie-renderer', 'ytd-ad-slot-renderer',
+            'ytd-universal-watch-card-renderer', '.ytp-videowall-still', '.ytp-ce-element',
+            '.ytp-autonav-endscreen-upnext-container', '.ytp-suggestion-link',
+            'ytm-rich-item-renderer', 'ytm-video-with-context-renderer', 'ytm-compact-video-renderer',
+            'ytm-reel-item-renderer', 'ytm-comment-renderer',
+          ].join(','),
+        },
+      ],
+      detail: path => path === '/watch' || path.startsWith('/shorts/'),
+    },
   ];
 })();
