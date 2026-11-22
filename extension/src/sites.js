@@ -7,6 +7,7 @@
   ].join(',');
 
   const attr = (el, name) => el.getAttribute(name) || '';
+  const startUrl = globalThis.location?.href;
 
   S.cardText = el => {
     const bits = [];
@@ -66,6 +67,12 @@
         },
       ],
       detail: path => path === '/watch' || path.startsWith('/shorts/'),
+      pageTitle: () => {
+        if (location.pathname !== '/watch') return document.title;
+        const id = document.querySelector('ytd-watch-flexy')?.getAttribute('video-id');
+        const fresh = id ? id === new URLSearchParams(location.search).get('v') : location.href === startUrl;
+        return fresh ? document.title : null;
+      },
     },
   ];
 })();

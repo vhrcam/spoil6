@@ -4,6 +4,45 @@
   if (!site) return;
 
   const LABELS = { topic: 'Mentions GTA 6', spoiler: 'Possible GTA 6 spoiler', yours: 'Has a word you blocked' };
+  const GATE_TITLES = { topic: 'This page is about GTA 6', spoiler: 'This page might spoil GTA 6', yours: 'This page has a word you blocked' };
+  const GATE_CSS = `
+    :host {
+      all: initial;
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      display: grid;
+      place-items: center;
+      background: repeating-linear-gradient(135deg, var(--spoil6-panel) 0 12px, var(--spoil6-stripe) 12px 24px);
+      color: var(--spoil6-ink);
+      font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    .card {
+      width: min(360px, calc(100vw - 48px));
+      padding: 28px;
+      border: 1px solid var(--spoil6-line);
+      border-radius: 20px;
+      background: var(--spoil6-pill);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+      text-align: center;
+    }
+    .brand { margin: 0 0 10px; color: var(--spoil6-soft); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
+    h1 { margin: 0 0 6px; font-size: 20px; line-height: 1.25; }
+    .note { margin: 0 0 22px; color: var(--spoil6-soft); }
+    .actions { display: flex; gap: 10px; }
+    button {
+      flex: 1;
+      padding: 11px 14px;
+      border: 1px solid var(--spoil6-line);
+      border-radius: 999px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .back { border-color: transparent; background: var(--spoil6-ink); color: var(--spoil6-pill); }
+    button:focus-visible { outline: 2px solid var(--spoil6-soft); outline-offset: 2px; }`;
   const HOVER = ['mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'mousemove', 'pointerover', 'pointerout', 'pointerenter', 'pointerleave', 'pointermove'];
   const root = document.documentElement;
   const cardSel = site.cards.map(c => c.sel).join(',');
@@ -14,7 +53,11 @@
   let seen = new WeakMap();
   const revealedLinks = new Set();
   const revealedEls = new WeakSet();
+  const shownPages = new Set();
   const pending = new Set();
+  let gate;
+  let held;
+  let lastPage = '';
 
   const configOf = el => site.cards.find(c => el.matches(c.sel));
 
@@ -23,7 +66,15 @@
     return el;
   };
 
-  const linkOf = el => (el.matches(S.linkSel) ? el : el.querySelector(S.linkSel))?.getAttribute('href');
+  const keyOf = href => {
+    const url = new URL(href, location.href);
+    return url.pathname.replace(/\/$/, '') + url.search;
+  };
+
+  const linkOf = el => {
+    const href = (el.matches(S.linkSel) ? el : el.querySelector(S.linkSel))?.getAttribute('href');
+    return href && keyOf(href);
+  };
 
   const isRevealed = el => {
     const link = linkOf(el);
@@ -31,7 +82,7 @@
   };
 
   let countTimer;
-  const hiddenCount = () => document.querySelectorAll('[data-spoil6="hidden"]').length;
+  const hiddenCount = () => document.querySelectorAll('[data-spoil6="hidden"]').length + (gate?.host.isConnected ? 1 : 0);
   const changed = () => {
     clearTimeout(countTimer);
     countTimer = setTimeout(() => {
@@ -79,13 +130,72 @@
     else unhide(target);
   }
 
+  function buildGate() {
+    const host = document.createElement('spoil6-gate');
+    const shadow = host.attachShadow({ mode: 'open' });
+    shadow.innerHTML = `<style>${GATE_CSS}</style>
+      <div class="card" role="dialog" aria-modal="true" aria-labelledby="title">
+        <p class="brand">spoil6</p>
+        <h1 id="title"></h1>
+        <p class="note">Stopped here so you can decide.</p>
+        <div class="actions">
+          <button class="back">Go back</button>
+          <button class="show">Show page</button>
+        </div>
+      </div>`;
+    shadow.querySelector('.back').addEventListener('click', () => (history.length > 1 ? history.back() : location.assign('/')));
+    shadow.querySelector('.show').addEventListener('click', () => {
+      const key = keyOf(location.href);
+      shownPages.add(key);
+      revealedLinks.add(key);
+      rescan();
+    });
+    return { host, title: shadow.querySelector('h1'), back: shadow.querySelector('.back') };
+  }
+
+  function openGate(reason) {
+    gate ??= buildGate();
+    gate.title.textContent = GATE_TITLES[reason];
+    if (gate.host.isConnected) return;
+    root.append(gate.host);
+    gate.back.focus();
+    for (const video of document.querySelectorAll('video')) video.pause();
+    changed();
+  }
+
+  function closeGate() {
+    if (!gate?.host.isConnected) return;
+    gate.host.remove();
+    changed();
+  }
+
+  const pageTitle = () => (site.pageTitle ? site.pageTitle() : document.title);
+
+  function checkPage() {
+    const key = keyOf(location.href);
+    const title = pageTitle();
+    const sig = `${on}|${key}|${title}`;
+    if (sig === lastPage) return;
+    lastPage = sig;
+    if (title === null) return;
+    const reason = on && site.detail?.(location.pathname) && !shownPages.has(key)
+      ? match(`${title} ${location.pathname}`)
+      : null;
+    if (reason) return openGate(reason);
+    closeGate();
+    held?.play().catch(() => {});
+    held = null;
+  }
+
   function flush() {
     for (const el of pending) if (el.isConnected) check(outermost(el));
     pending.clear();
+    checkPage();
   }
 
   function rescan() {
     seen = new WeakMap();
+    lastPage = '';
     for (const el of document.querySelectorAll('[data-spoil6]')) unhide(el);
     for (const el of document.querySelectorAll(cardSel)) pending.add(el);
     flush();
@@ -117,8 +227,12 @@
     window.addEventListener(type, onPointer, true);
 
   document.addEventListener('play', e => {
-    if (e.target.closest('[data-spoil6="hidden"]')) e.target.pause();
+    checkPage();
+    const unknown = on && site.detail?.(location.pathname) && pageTitle() === null;
+    if (unknown) held = e.target;
+    if (unknown || gate?.host.isConnected || e.target.closest('[data-spoil6="hidden"]')) e.target.pause();
   }, true);
+  addEventListener('popstate', checkPage);
 
   function readTheme() {
     const rgb = el => el && getComputedStyle(el).backgroundColor.match(/[\d.]+/g)?.map(Number);
