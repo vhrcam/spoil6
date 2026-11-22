@@ -16,13 +16,13 @@ const report = await page.evaluate(sel => {
   const cards = [...document.querySelectorAll(sel)];
   const looksGta = el => /gta|grand theft|leonida|vice city|rockstar/i.test(el.textContent + ' ' + (el.querySelector('[aria-label]')?.getAttribute('aria-label') || ''));
   const inCover = el => el.closest('[data-spoil6="hidden"]');
+  const missed = cards.filter(el => looksGta(el) && !inCover(el));
   return {
-    title: document.title,
     cards: cards.length,
     covered: document.querySelectorAll('[data-spoil6="hidden"]').length,
     gate: !!document.querySelector('spoil6-gate'),
-    missed: cards.filter(el => looksGta(el) && !inCover(el)).slice(0, 8)
-      .map(el => `${el.tagName.toLowerCase()}: ${el.textContent.replace(/\s+/g, ' ').trim().slice(0, 90)}`),
+    missed: missed.length,
+    missedTypes: [...new Set(missed.map(el => el.tagName.toLowerCase()))],
     shown: cards.filter(el => !looksGta(el) && !inCover(el)).length,
   };
 }, cardSel);
