@@ -74,5 +74,21 @@
         return fresh ? document.title : null;
       },
     },
+    {
+      id: 'tiktok',
+      name: 'TikTok',
+      hosts: ['tiktok.com'],
+      cards: [
+        {
+          sel: [
+            '[data-e2e="recommend-list-item-container"]', '[data-e2e="search_top-item"]', '[data-e2e="search_video-item"]',
+            '[data-e2e="user-post-item"]', '[data-e2e="user-liked-item"]', '[data-e2e="favorites-item"]',
+            '[data-e2e="explore-item"]', '[data-e2e="challenge-item"]', '[data-e2e="music-item"]',
+            '[class*="DivCommentItemContainer"]',
+          ].join(','),
+        },
+      ],
+      detail: path => /\/(video|photo)\/\d+/.test(path),
+    },
   ];
 })();
