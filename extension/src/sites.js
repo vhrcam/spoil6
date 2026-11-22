@@ -90,5 +90,12 @@
       ],
       detail: path => /\/(video|photo)\/\d+/.test(path),
     },
+    {
+      id: 'instagram',
+      name: 'Instagram',
+      hosts: ['instagram.com'],
+      cards: [{ sel: 'article, a[href*="/p/"]:has(img), a[href*="/reel/"]:has(img)' }],
+      detail: path => /\/(p|reel|reels)\/[\w-]+/.test(path),
+    },
   ];
 })();
