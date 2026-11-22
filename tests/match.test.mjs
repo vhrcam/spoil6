@@ -42,6 +42,7 @@ test('marks spoiler talk', () => {
   for (const text of [
     'The GTA 6 ending got me', '#GTA6Spoilers', '#gta6ending', '#GTAVIEnding', 'no way Jason Duval dies',
     'just beat GTA', '/r/gaming/comments/abc/gta_6_ending_explained/', 'GTA 6 final mission was crazy',
+    'that GTA 6 mission with the boat',
   ]) assert.equal(all(text), 'spoiler', text);
 });
 

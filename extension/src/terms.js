@@ -21,7 +21,7 @@
 
     spoiler: [
       'spoiler', 'spoiled', 'spoil', 'spoiling',
-      'ending', 'the end', 'final mission', 'last mission', 'final chapter', 'finale', 'epilogue',
+      'ending', 'the end', 'mission', 'final chapter', 'finale', 'epilogue',
       'credits', 'post credits', 'true ending', 'secret ending',
       'dies', 'died', 'death', 'dead', 'killed', 'kills', 'murdered', 'rip',
       'twist', 'plot', 'betray', 'betrayed', 'betrayal', 'traitor', 'reveal', 'revealed', 'turns out',
