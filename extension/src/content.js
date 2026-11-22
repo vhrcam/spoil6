@@ -247,6 +247,7 @@
     match = S.createMatcher(next);
     on = S.isOn(next, site.id);
     root.dataset.spoil6Style = next.style;
+    readTheme();
     clearTimeout(resumeTimer);
     const wait = next.pausedUntil - Date.now();
     if (next.enabled && wait > 0) resumeTimer = setTimeout(() => apply(settings), wait + 100);
