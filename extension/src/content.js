@@ -181,9 +181,9 @@
     const reason = on && site.detail?.(location.pathname) && !shownPages.has(key)
       ? match(`${title} ${location.pathname}`)
       : null;
-    if (reason) return openGate(reason);
-    closeGate();
-    held?.play().catch(() => {});
+    if (!reason) closeGate();
+    else openGate(reason);
+    if (!reason && held?.key === key) held.video.play().catch(() => {});
     held = null;
   }
 
@@ -229,7 +229,7 @@
   document.addEventListener('play', e => {
     checkPage();
     const unknown = on && site.detail?.(location.pathname) && pageTitle() === null;
-    if (unknown) held = e.target;
+    if (unknown) held = { video: e.target, key: keyOf(location.href) };
     if (unknown || gate?.host.isConnected || e.target.closest('[data-spoil6="hidden"]')) e.target.pause();
   }, true);
   addEventListener('popstate', checkPage);
