@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>spoil6</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>spoil6</h1>
+    <label class="switch" title="Turn spoil6 on or off">
+      <input type="checkbox" id="enabled" aria-label="spoil6 on">
+      <span></span>
+    </label>
+  </header>
+
+  <p id="status" class="status"></p>
+  <button id="pause" class="pause"></button>
+
+  <section>
+    <h2>What to hide</h2>
+    <div class="choice">
+      <label><input type="radio" name="mode" value="all"><span>All GTA 6 posts</span></label>
+      <label><input type="radio" name="mode" value="spoilers"><span>Only spoilers</span></label>
+    </div>
+    <p id="modeHint" class="hint"></p>
+  </section>
+
+  <section>
+    <h2>Hidden posts</h2>
+    <div class="choice">
+      <label><input type="radio" name="style" value="cover"><span>Cover them</span></label>
+      <label><input type="radio" name="style" value="remove"><span>Remove them</span></label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Sites</h2>
+    <div id="sites" class="sites"></div>
+  </section>
+
+  <section>
+    <h2>Always hide posts with</h2>
+    <textarea id="blockWords" rows="2" placeholder="One word or phrase per line" spellcheck="false"></textarea>
+    <h2>Never hide posts with</h2>
+    <textarea id="allowWords" rows="2" placeholder="One word or phrase per line" spellcheck="false"></textarea>
+  </section>
+
+  <script src="../src/settings.js"></script>
+  <script src="../src/sites.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
