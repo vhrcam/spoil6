@@ -1,0 +1,68 @@
+:root {
+  --spoil6-panel: #eceef1;
+  --spoil6-stripe: #e4e7eb;
+  --spoil6-pill: #ffffff;
+  --spoil6-ink: #15171a;
+  --spoil6-soft: #5d636b;
+  --spoil6-line: rgba(0, 0, 0, 0.1);
+}
+
+:root[data-spoil6-theme="dark"] {
+  --spoil6-panel: #16181b;
+  --spoil6-stripe: #1b1e22;
+  --spoil6-pill: #262a30;
+  --spoil6-ink: #eceef1;
+  --spoil6-soft: #9aa1aa;
+  --spoil6-line: rgba(255, 255, 255, 0.1);
+}
+
+[data-spoil6-pos] {
+  position: relative !important;
+}
+
+[data-spoil6="hidden"] {
+  isolation: isolate !important;
+  min-height: 44px !important;
+}
+
+[data-spoil6="hidden"] > * {
+  visibility: hidden !important;
+}
+
+[data-spoil6="hidden"]::before {
+  all: initial !important;
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  display: block !important;
+  border-radius: inherit !important;
+  background: repeating-linear-gradient(135deg, var(--spoil6-panel) 0 12px, var(--spoil6-stripe) 12px 24px) !important;
+  cursor: pointer !important;
+}
+
+[data-spoil6="hidden"]::after {
+  all: initial !important;
+  content: attr(data-spoil6-label) !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 2147483647 !important;
+  box-sizing: border-box !important;
+  max-width: calc(100% - 20px) !important;
+  padding: 7px 14px !important;
+  border: 1px solid var(--spoil6-line) !important;
+  border-radius: 999px !important;
+  background: var(--spoil6-pill) !important;
+  color: var(--spoil6-ink) !important;
+  font: 600 13px/1.25 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  pointer-events: none !important;
+}
+
+:root[data-spoil6-style="remove"] [data-spoil6="hidden"] {
+  display: none !important;
+}

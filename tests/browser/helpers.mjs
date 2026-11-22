@@ -1,0 +1,17 @@
+import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright';
+
+export const extensionPath = fileURLToPath(new URL('../../extension', import.meta.url));
+
+export const launch = () => chromium.launchPersistentContext('', {
+  channel: 'chromium',
+  headless: true,
+  args: [`--disable-extensions-except=${extensionPath}`, `--load-extension=${extensionPath}`],
+});
+
+export const open = async (context, url, body) => {
+  const page = await context.newPage();
+  await page.route(url, route => route.fulfill({ contentType: 'text/html', body }));
+  await page.goto(url);
+  return page;
+};
