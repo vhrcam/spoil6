@@ -6,6 +6,8 @@
     'a[href*="/video/"]', 'a[href*="/p/"]', 'a[href*="/reel/"]',
   ].join(',');
 
+  const attr = (el, name) => el.getAttribute(name) || '';
+
   S.cardText = el => {
     const bits = [];
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
@@ -24,6 +26,25 @@
         { sel: '[data-testid="cellInnerDiv"], article[data-testid="tweet"], [data-testid="trend"], [data-testid="UserCell"]' },
       ],
       detail: path => /\/status\/\d+/.test(path),
+    },
+    {
+      id: 'reddit',
+      name: 'Reddit',
+      hosts: ['reddit.com'],
+      cards: [
+        {
+          sel: 'shreddit-post',
+          target: el => el.closest('article') || el,
+          text: el => `${attr(el, 'post-title')} ${attr(el, 'subreddit-prefixed-name')} ${S.cardText(el)}`,
+          hint: el => ({ topic: S.isGtaSubreddit(attr(el, 'subreddit-prefixed-name')), spoiler: el.hasAttribute('spoiler') }),
+        },
+        {
+          sel: '.thing.link',
+          hint: el => ({ topic: S.isGtaSubreddit(attr(el, 'data-subreddit')), spoiler: el.classList.contains('spoiler') }),
+        },
+        { sel: 'shreddit-ad-post, shreddit-comment > [slot="comment"], .thing.comment > .entry' },
+      ],
+      detail: path => path.includes('/comments/'),
     },
     {
       id: 'youtube',
