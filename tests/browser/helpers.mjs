@@ -9,6 +9,8 @@ export const launch = () => chromium.launchPersistentContext('', {
   args: [`--disable-extensions-except=${extensionPath}`, `--load-extension=${extensionPath}`],
 });
 
+export const worker = async context => context.serviceWorkers()[0] ?? context.waitForEvent('serviceworker');
+
 export const open = async (context, url, body) => {
   const page = await context.newPage();
   await page.route(url, route => route.fulfill({ contentType: 'text/html', body }));

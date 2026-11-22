@@ -4,6 +4,8 @@
   "version": "0.1.0",
   "description": "Hides GTA 6 spoilers on X, Reddit, YouTube, TikTok and Instagram until you choose to see them.",
   "permissions": ["storage"],
+  "action": { "default_title": "spoil6" },
+  "background": { "service_worker": "src/background.js" },
   "content_scripts": [
     {
       "matches": [
