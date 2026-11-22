@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "spoil6",
+  "version": "0.1.0",
+  "description": "Hides GTA 6 spoilers on X, Reddit, YouTube, TikTok and Instagram until you choose to see them.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://x.com/*",
+        "https://twitter.com/*",
+        "https://mobile.x.com/*",
+        "https://www.reddit.com/*",
+        "https://old.reddit.com/*",
+        "https://new.reddit.com/*",
+        "https://sh.reddit.com/*",
+        "https://www.youtube.com/*",
+        "https://m.youtube.com/*",
+        "https://www.tiktok.com/*",
+        "https://www.instagram.com/*"
+      ],
+      "js": ["src/terms.js", "src/match.js", "src/settings.js", "src/sites.js", "src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_start"
+    }
+  ]
+}
