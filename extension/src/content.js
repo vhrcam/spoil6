@@ -5,6 +5,7 @@
 
   const LABELS = { topic: 'Mentions GTA 6', spoiler: 'Possible GTA 6 spoiler', yours: 'Has a word you blocked' };
   const GATE_TITLES = { topic: 'This page is about GTA 6', spoiler: 'This page might spoil GTA 6', yours: 'This page has a word you blocked' };
+  const STAR = (x, y, r) => `radial-gradient(${r}px ${r}px at ${x}% ${y}%, rgba(255, 255, 255, 0.85), transparent)`;
   const GATE_CSS = `
     :host {
       all: initial;
@@ -13,36 +14,82 @@
       z-index: 2147483647;
       display: grid;
       place-items: center;
-      background: repeating-linear-gradient(135deg, var(--spoil6-panel) 0 12px, var(--spoil6-stripe) 12px 24px);
-      color: var(--spoil6-ink);
+      overflow: hidden;
+      background:
+        ${STAR(12, 18, 1.5)}, ${STAR(27, 7, 1)}, ${STAR(41, 26, 1.5)}, ${STAR(58, 11, 1)},
+        ${STAR(70, 24, 1.5)}, ${STAR(84, 9, 1)}, ${STAR(93, 21, 1.5)},
+        linear-gradient(180deg, #0d0524 0%, #250b52 34%, #5e1a7c 56%, #b02d82 68%, #ff5f7e 78%);
+      color: #fff4fb;
       font: 15px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
+    .sun {
+      position: absolute;
+      top: 78%;
+      left: 50%;
+      width: 42vmin;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(180deg, #ffe58f 8%, #ff9c5b 30%, #ff4f9a 50%);
+      mask-image: linear-gradient(180deg, #000 0 31%, transparent 31% 34%, #000 34% 39%, transparent 39% 42.5%, #000 42.5% 46%, transparent 46%);
+    }
+    .sea {
+      position: absolute;
+      inset: 78% 0 0;
+      background: linear-gradient(180deg, #3b0f63, #12052a 70%);
+    }
+    .sea::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 48vmin;
+      height: 100%;
+      transform: translateX(-50%);
+      background: repeating-linear-gradient(180deg, rgba(255, 150, 130, 0.65) 0 2px, transparent 2px 11px);
+      mask-image: radial-gradient(50% 100% at 50% 0, #000 15%, transparent 100%);
+    }
+    .palm { position: absolute; bottom: 0; width: auto; height: 62vh; fill: #13052b; }
+    .left { left: -3vh; }
+    .right { right: -2vh; height: 46vh; transform: scaleX(-1); }
     .card {
+      position: relative;
       width: min(360px, calc(100vw - 48px));
+      margin-bottom: 22vh;
       padding: 28px;
-      border: 1px solid var(--spoil6-line);
-      border-radius: 20px;
-      background: var(--spoil6-pill);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 22px;
+      background: rgba(22, 8, 48, 0.66);
+      box-shadow: 0 24px 70px rgba(8, 0, 24, 0.55);
+      backdrop-filter: blur(16px);
       text-align: center;
     }
-    .brand { margin: 0 0 10px; color: var(--spoil6-soft); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; }
-    h1 { margin: 0 0 6px; font-size: 20px; line-height: 1.25; }
-    .note { margin: 0 0 22px; color: var(--spoil6-soft); }
+    .brand { margin: 0 0 10px; color: #ff8fd0; font-size: 12px; font-weight: 800; letter-spacing: 0.14em; }
+    h1 { margin: 0 0 6px; font-size: 21px; line-height: 1.25; }
+    .note { margin: 0 0 22px; color: #dcc6f2; }
     .actions { display: flex; gap: 10px; }
     button {
       flex: 1;
       padding: 11px 14px;
-      border: 1px solid var(--spoil6-line);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 999px;
-      background: transparent;
+      background: rgba(255, 255, 255, 0.06);
       color: inherit;
       font: inherit;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
     }
-    .back { border-color: transparent; background: var(--spoil6-ink); color: var(--spoil6-pill); }
-    button:focus-visible { outline: 2px solid var(--spoil6-soft); outline-offset: 2px; }`;
+    button:hover { background: rgba(255, 255, 255, 0.12); }
+    .back { border-color: transparent; background: linear-gradient(90deg, #ff4fa8, #ff8a5c); color: #1c0733; }
+    .back:hover { background: linear-gradient(90deg, #ff66b5, #ff9a70); }
+    button:focus-visible { outline: 2px solid #3ee6e6; outline-offset: 2px; }`;
+  const PALM = side => `<svg class="palm ${side}" viewBox="0 0 240 420" aria-hidden="true">
+    <path d="M100 420C108 320 122 200 146 92L156 94C134 200 122 320 120 420Z"/>
+    <path d="M150 88Q96 50 30 100Q96 68 150 94Z"/><path d="M150 92Q98 98 70 160Q108 108 150 98Z"/>
+    <path d="M150 88Q206 46 238 110Q198 68 150 94Z"/><path d="M150 92Q204 104 216 168Q190 112 150 98Z"/>
+    <path d="M150 88Q118 28 70 34Q122 46 148 92Z"/><path d="M150 88Q186 24 230 50Q182 42 154 92Z"/>
+    <path d="M148 94Q134 130 112 168Q142 128 156 96Z"/><circle cx="146" cy="100" r="5"/><circle cx="157" cy="102" r="5"/>
+  </svg>`;
   const HOVER = ['mouseover', 'mouseout', 'mouseenter', 'mouseleave', 'mousemove', 'pointerover', 'pointerout', 'pointerenter', 'pointerleave', 'pointermove'];
   const root = document.documentElement;
   const cardSel = site.cards.map(c => c.sel).join(',');
@@ -134,6 +181,9 @@
     const host = document.createElement('spoil6-gate');
     const shadow = host.attachShadow({ mode: 'open' });
     shadow.innerHTML = `<style>${GATE_CSS}</style>
+      <div class="sun"></div>
+      <div class="sea"></div>
+      ${PALM('left')}${PALM('right')}
       <div class="card" role="dialog" aria-modal="true" aria-labelledby="title">
         <p class="brand">spoil6</p>
         <h1 id="title"></h1>
