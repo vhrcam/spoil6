@@ -1,19 +1,21 @@
 :root {
-  --spoil6-panel: #eceef1;
-  --spoil6-stripe: #e4e7eb;
+  --spoil6-panel: #f5ebff;
+  --spoil6-stripe: #ecdbff;
+  --spoil6-glow: rgba(255, 92, 168, 0.24);
   --spoil6-pill: #ffffff;
-  --spoil6-ink: #15171a;
-  --spoil6-soft: #5d636b;
-  --spoil6-line: rgba(0, 0, 0, 0.1);
+  --spoil6-ink: #3d1072;
+  --spoil6-line: #ff7cc0;
+  --spoil6-shadow: rgba(140, 50, 200, 0.25);
 }
 
 :root[data-spoil6-theme="dark"] {
-  --spoil6-panel: #16181b;
-  --spoil6-stripe: #1b1e22;
-  --spoil6-pill: #262a30;
-  --spoil6-ink: #eceef1;
-  --spoil6-soft: #9aa1aa;
-  --spoil6-line: rgba(255, 255, 255, 0.1);
+  --spoil6-panel: #1c0c38;
+  --spoil6-stripe: #241147;
+  --spoil6-glow: rgba(255, 79, 168, 0.32);
+  --spoil6-pill: #13072b;
+  --spoil6-ink: #ffe8f5;
+  --spoil6-line: #ff4fa8;
+  --spoil6-shadow: rgba(255, 79, 168, 0.5);
 }
 
 [data-spoil6-pos] {
@@ -37,7 +39,9 @@
   z-index: 2147483647 !important;
   display: block !important;
   border-radius: inherit !important;
-  background: repeating-linear-gradient(135deg, var(--spoil6-panel) 0 12px, var(--spoil6-stripe) 12px 24px) !important;
+  background:
+    linear-gradient(to top, var(--spoil6-glow), transparent 75%),
+    repeating-linear-gradient(135deg, var(--spoil6-panel) 0 12px, var(--spoil6-stripe) 12px 24px) !important;
   cursor: pointer !important;
 }
 
@@ -55,6 +59,7 @@
   border: 1px solid var(--spoil6-line) !important;
   border-radius: 999px !important;
   background: var(--spoil6-pill) !important;
+  box-shadow: 0 0 14px var(--spoil6-shadow) !important;
   color: var(--spoil6-ink) !important;
   font: 600 13px/1.25 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
   white-space: nowrap !important;
