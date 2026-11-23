@@ -1,5 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <rect x="4" y="4" width="120" height="120" rx="28" fill="#15171a"/>
-  <text x="64" y="100" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="800" font-size="106" fill="#ffffff">6</text>
-  <rect x="12" y="54" width="104" height="24" rx="5" fill="#ffd23f" transform="rotate(-8 64 66)"/>
+  <defs>
+    <linearGradient id="sunset" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a0d5c"/>
+      <stop offset="0.55" stop-color="#9b2a8f"/>
+      <stop offset="1" stop-color="#ff6a7f"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#sunset)"/>
+  <text x="64" y="100" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="800" font-size="100" letter-spacing="-2" fill="#ffffff">VI</text>
+  <rect x="10" y="62" width="108" height="16" rx="4" fill="#3ee6e6" transform="rotate(-8 64 70)"/>
 </svg>
