@@ -5,8 +5,21 @@
       <stop offset="0.55" stop-color="#9b2a8f"/>
       <stop offset="1" stop-color="#ff6a7f"/>
     </linearGradient>
+    <clipPath id="tile">
+      <rect x="4" y="4" width="120" height="120" rx="28"/>
+    </clipPath>
+    <g id="palm">
+      <path d="M100 420C108 320 122 200 146 92L156 94C134 200 122 320 120 420Z"/>
+      <path d="M150 88Q96 50 30 100Q96 68 150 94Z"/><path d="M150 92Q98 98 70 160Q108 108 150 98Z"/>
+      <path d="M150 88Q206 46 238 110Q198 68 150 94Z"/><path d="M150 92Q204 104 216 168Q190 112 150 98Z"/>
+      <path d="M150 88Q118 28 70 34Q122 46 148 92Z"/><path d="M150 88Q186 24 230 50Q182 42 154 92Z"/>
+      <path d="M148 94Q134 130 112 168Q142 128 156 96Z"/><circle cx="146" cy="100" r="5"/><circle cx="157" cy="102" r="5"/>
+    </g>
   </defs>
   <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#sunset)"/>
-  <text x="64" y="100" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="800" font-size="100" letter-spacing="-2" fill="#ffffff">VI</text>
-  <rect x="10" y="62" width="108" height="16" rx="4" fill="#3ee6e6" transform="rotate(-8 64 70)"/>
+  <g clip-path="url(#tile)" fill="#2a0d5c" opacity="0.5">
+    <use href="#palm" transform="translate(-6 62) scale(0.16)"/>
+    <use href="#palm" transform="translate(134 72) scale(-0.14 0.14)"/>
+  </g>
+  <path fill="#ffffff" fill-rule="evenodd" transform="translate(64 64) skewX(-7) translate(-30 -44)" d="M24 0H42A18 18 0 0 1 60 18V23A6 6 0 0 1 54 29C49 29 47 21.5 41 21.5H27A6.5 6.5 0 0 0 27 34.5H55A5 5 0 0 1 60 39.5V62A26 26 0 0 1 34 88H26A26 26 0 0 1 0 62V24A24 24 0 0 1 24 0ZM30 50.5A10 10 0 0 1 40 60.5V62.5A10 10 0 0 1 20 62.5V60.5A10 10 0 0 1 30 50.5Z"/>
 </svg>
