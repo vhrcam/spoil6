@@ -6,7 +6,7 @@
   --soft: #b9a1dc;
   --line: #3a2268;
   --sunset: linear-gradient(90deg, #ff4fa8, #ff8a5c);
-  --neon: linear-gradient(90deg, #ff4fa8, #a44dff);
+  --pick: #8f3dff;
   --focus: #3ee6e6;
   color-scheme: dark;
 }
@@ -112,9 +112,9 @@ h2 {
 }
 
 .choice input:checked + span {
-  background: var(--neon);
+  background: var(--pick);
   color: #ffffff;
-  box-shadow: 0 0 12px rgba(255, 79, 168, 0.35);
+  box-shadow: 0 0 12px rgba(143, 61, 255, 0.35);
 }
 
 .hint {
@@ -141,7 +141,7 @@ h2 {
 
 .sites input:checked + span {
   border-color: transparent;
-  background: var(--neon);
+  background: var(--pick);
   color: #ffffff;
 }
 
@@ -210,7 +210,7 @@ textarea:focus {
 }
 
 .switch input:checked + span {
-  background: var(--sunset);
+  background: var(--pick);
 }
 
 .switch input:checked + span::after {

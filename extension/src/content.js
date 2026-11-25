@@ -80,8 +80,8 @@
       cursor: pointer;
     }
     button:hover { background: rgba(255, 255, 255, 0.12); }
-    .back { border-color: transparent; background: linear-gradient(90deg, #ff4fa8, #ff8a5c); color: #1c0733; }
-    .back:hover { background: linear-gradient(90deg, #ff66b5, #ff9a70); }
+    .back { border-color: transparent; background: #8f3dff; color: #ffffff; }
+    .back:hover { background: #9d55ff; }
     button:focus-visible { outline: 2px solid #3ee6e6; outline-offset: 2px; }`;
   const PALM = side => `<svg class="palm ${side}" viewBox="0 0 240 420" aria-hidden="true">
     <path d="M100 420C108 320 122 200 146 92L156 94C134 200 122 320 120 420Z"/>
