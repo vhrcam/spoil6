@@ -27,7 +27,7 @@ function render() {
   $('status').textContent = statusText();
   $('pause').hidden = !settings.enabled;
   $('pause').textContent = settings.pausedUntil > Date.now() ? 'Resume now' : 'Pause for 1 hour';
-  for (const input of document.querySelectorAll('[name=mode], [name=style]')) input.checked = settings[input.name] === input.value;
+  for (const input of document.querySelectorAll('[name=mode]')) input.checked = settings[input.name] === input.value;
   $('modeHint').textContent = HINTS[settings.mode];
   for (const input of $('sites').querySelectorAll('input')) input.checked = settings.sites[input.value];
   for (const id of ['blockWords', 'allowWords']) {
@@ -53,7 +53,7 @@ $('sites').innerHTML = S.sites
 $('enabled').addEventListener('change', e => save({ enabled: e.target.checked, pausedUntil: 0 }));
 $('pause').addEventListener('click', () => save({ pausedUntil: settings.pausedUntil > Date.now() ? 0 : Date.now() + 60 * 60 * 1000 }));
 $('sites').addEventListener('change', e => save({ sites: { ...settings.sites, [e.target.value]: e.target.checked } }));
-for (const input of document.querySelectorAll('[name=mode], [name=style]')) {
+for (const input of document.querySelectorAll('[name=mode]')) {
   input.addEventListener('change', () => save({ [input.name]: input.value }));
 }
 for (const id of ['blockWords', 'allowWords']) {

@@ -296,7 +296,6 @@
     settings = next;
     match = S.createMatcher(next);
     on = S.isOn(next, site.id);
-    root.dataset.spoil6Style = next.style;
     readTheme();
     clearTimeout(resumeTimer);
     const wait = next.pausedUntil - Date.now();
@@ -304,7 +303,6 @@
     rescan();
   }
 
-  root.dataset.spoil6Style = settings.style;
   observer.observe(document, { childList: true, subtree: true, characterData: true });
   S.loadSettings().then(apply);
   S.onSettings(apply);

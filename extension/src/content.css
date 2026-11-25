@@ -67,7 +67,3 @@
   text-overflow: ellipsis !important;
   pointer-events: none !important;
 }
-
-:root[data-spoil6-style="remove"] [data-spoil6="hidden"] {
-  display: none !important;
-}

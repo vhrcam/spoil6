@@ -39,13 +39,6 @@ test('your own words get covered too', async () => {
   assert.equal((await cells())[2], 'Has a word you blocked · Show');
 });
 
-test('Remove them takes covered posts out of the feed', async () => {
-  await popup.getByText('Remove them').click();
-  await settle();
-  const display = await feed.$eval('[data-testid="cellInnerDiv"]', el => getComputedStyle(el).display);
-  assert.equal(display, 'none');
-});
-
 test('pausing shows everything until you resume', async () => {
   await popup.getByText('Pause for 1 hour').click();
   await settle();
