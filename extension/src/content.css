@@ -1,6 +1,5 @@
 :root {
-  --spoil6-panel: #f5ebff;
-  --spoil6-stripe: #ecdbff;
+  --spoil6-veil: rgba(240, 226, 255, 0.5);
   --spoil6-glow: rgba(255, 92, 168, 0.24);
   --spoil6-pill: #ffffff;
   --spoil6-ink: #3d1072;
@@ -9,8 +8,7 @@
 }
 
 :root[data-spoil6-theme="dark"] {
-  --spoil6-panel: #1c0c38;
-  --spoil6-stripe: #241147;
+  --spoil6-veil: rgba(28, 12, 56, 0.5);
   --spoil6-glow: rgba(255, 79, 168, 0.32);
   --spoil6-pill: #13072b;
   --spoil6-ink: #ffe8f5;
@@ -24,11 +22,8 @@
 
 [data-spoil6="hidden"] {
   isolation: isolate !important;
+  overflow: clip !important;
   min-height: 44px !important;
-}
-
-[data-spoil6="hidden"] > * {
-  visibility: hidden !important;
 }
 
 [data-spoil6="hidden"]::before {
@@ -39,9 +34,9 @@
   z-index: 2147483647 !important;
   display: block !important;
   border-radius: inherit !important;
-  background:
-    linear-gradient(to top, var(--spoil6-glow), transparent 75%),
-    repeating-linear-gradient(135deg, var(--spoil6-panel) 0 12px, var(--spoil6-stripe) 12px 24px) !important;
+  background: linear-gradient(to top, var(--spoil6-glow), transparent 75%), var(--spoil6-veil) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.2) !important;
+  backdrop-filter: blur(24px) saturate(1.2) !important;
   cursor: pointer !important;
 }
 
