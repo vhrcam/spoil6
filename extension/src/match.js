@@ -98,15 +98,11 @@
   S.isGtaSubreddit = name => subreddit.test(name.trim().replace(/^r\//i, ''));
 
   S.createMatcher = settings => {
-    const block = compile(words(settings.blockWords));
-    const allow = compile(words(settings.allowWords));
     const at = S.story?.missions && settings.progress > 0 ? settings.progress : 0;
     const loosen = at > 0 && at < S.story?.missions;
 
     return (raw, hint = {}) => {
       const text = S.prepare(raw);
-      if (allow?.test(text)) return null;
-      if (block?.test(text)) return 'yours';
       const story = at ? storyHits(text, at) : {};
       const about = hint.topic || gta6.test(text) || (series.test(text) && !notTheGame.test(text)) || story.solo;
       if (!about) return null;

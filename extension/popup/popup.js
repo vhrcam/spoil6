@@ -10,8 +10,6 @@ let settings;
 let page = null;
 let storyNote = '';
 
-const words = text => [...new Set(text.split(/[\n,]/).map(w => w.trim()).filter(Boolean))];
-
 function statusText() {
   if (!settings.enabled) return 'Off. Spoilers can show.';
   if (!page) return 'Works on X, Reddit, YouTube, TikTok and Instagram.';
@@ -40,9 +38,6 @@ function render() {
     $('clearProgress').hidden = !settings.progress || Boolean(storyNote);
   }
   for (const input of $('sites').querySelectorAll('input')) input.checked = settings.sites[input.value];
-  for (const id of ['blockWords', 'allowWords']) {
-    if (document.activeElement !== $(id)) $(id).value = settings[id].join('\n');
-  }
 }
 
 async function loadPage() {
@@ -83,13 +78,6 @@ $('clearProgress').addEventListener('click', () => save({ progress: 0 }));
 $('sites').addEventListener('change', e => save({ sites: { ...settings.sites, [e.target.value]: e.target.checked } }));
 for (const input of document.querySelectorAll('[name=mode]')) {
   input.addEventListener('change', () => save({ [input.name]: input.value }));
-}
-for (const id of ['blockWords', 'allowWords']) {
-  let timer;
-  $(id).addEventListener('input', () => {
-    clearTimeout(timer);
-    timer = setTimeout(() => save({ [id]: words($(id).value) }), 500);
-  });
 }
 
 (async () => {

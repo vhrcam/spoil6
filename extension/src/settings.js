@@ -6,8 +6,6 @@
     mode: 'all',
     progress: 0,
     sites: { x: true, reddit: true, youtube: true, tiktok: true, instagram: true },
-    blockWords: [],
-    allowWords: [],
   };
 
   const merge = saved => ({ ...S.defaults, ...saved, sites: { ...S.defaults.sites, ...saved?.sites } });

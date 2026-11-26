@@ -28,8 +28,6 @@ Click the spoil6 icon in your toolbar.
 - **What to hide:** All GTA 6 posts, or Only spoilers (GTA 6 posts about the story, missions, deaths or the ending).
 - **Where you are:** type the last story mission you finished. Posts about later missions, or characters you haven't met yet, get covered as "Later in the story". The names are saved as scrambled codes, so the list itself doesn't spoil anything.
 - **Sites:** turn spoil6 off for any of the five sites.
-- **Always hide posts with:** your own words, like a character you don't want to hear about yet. These hide posts even when they don't say GTA.
-- **Never hide posts with:** words that always let a post through, like GTA Online.
 
 Settings sync to your other computers if you're signed in to Chrome.
 

@@ -135,33 +135,25 @@ h2 {
   outline-offset: 1px;
 }
 
-textarea,
 #progress {
   display: block;
   width: 100%;
-  margin: 0 0 12px;
+  margin: 0;
   padding: 8px 10px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--field);
   color: var(--ink);
   font: inherit;
-  resize: vertical;
 }
 
-textarea::placeholder,
 #progress::placeholder {
   color: #7f6aa6;
 }
 
-textarea:focus,
 #progress:focus {
   border-color: #ff4fa8;
   outline: none;
-}
-
-#progress {
-  margin: 0;
 }
 
 .link {

@@ -4,7 +4,7 @@ import '../extension/src/terms.js';
 import '../extension/src/match.js';
 
 const S = globalThis.spoil6;
-const base = { mode: 'all', blockWords: [], allowWords: [] };
+const base = { mode: 'all' };
 const all = S.createMatcher(base);
 const spoilersOnly = S.createMatcher({ ...base, mode: 'spoilers' });
 
@@ -50,14 +50,6 @@ test('only spoilers mode lets plain GTA 6 posts through', () => {
   assert.equal(spoilersOnly('GTA 6 map is huge'), null);
   assert.equal(spoilersOnly('GTA 6 ending explained'), 'spoiler');
   assert.equal(spoilersOnly('spoil6 hides GTA 6 posts'), null);
-});
-
-test('your words always hide and allow words always show', () => {
-  const mine = S.createMatcher({ ...base, blockWords: ['brian', 'big twist'], allowWords: ['gta online'] });
-  assert.equal(mine('brian is so funny'), 'yours');
-  assert.equal(mine('that big twist though'), 'yours');
-  assert.equal(mine('GTA Online weekly update'), null);
-  assert.equal(mine('GTA 6 is out'), 'topic');
 });
 
 test('hints from the site count', () => {

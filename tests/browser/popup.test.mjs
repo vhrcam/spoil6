@@ -33,12 +33,6 @@ test('Only spoilers lets plain GTA 6 posts through', async () => {
   assert.deepEqual(await cells(), ['Possible GTA 6 spoiler · Show', '', '']);
 });
 
-test('your own words get covered too', async () => {
-  await popup.locator('#blockWords').fill('coffee');
-  await settle();
-  assert.equal((await cells())[2], 'Has a word you blocked · Show');
-});
-
 test('where you are takes a mission number and can be cleared', async () => {
   await popup.locator('#progress').fill('2');
   await popup.locator('#progress').press('Enter');
