@@ -6,7 +6,7 @@ GTA 6 is out, and every feed is full of it: clips from the last mission, thumbna
 
 ## What it does
 
-- **Covers GTA 6 posts before they show.** Posts, videos, comments, Shorts and search results get a striped cover with a label like "Possible GTA 6 spoiler · Show". Click the cover to see that one post. Clicking a cover never opens the post by accident.
+- **Covers GTA 6 posts before they show.** Posts, videos, comments, Shorts and search results get a blurred cover with a label like "Possible GTA 6 spoiler · Show". Click the cover to see that one post. Clicking a cover never opens the post by accident.
 - **Stops on GTA 6 pages.** Opening an X post, a Reddit thread, a YouTube video or Short, a TikTok video or an Instagram post about GTA 6 shows a full-page stop with **Go back** and **Show page**. Show page opens the post you came for. Replies, comments and other videos that mention GTA 6 stay covered.
 - **Keeps videos paused.** Videos under a cover or behind the stop don't play, and hovering a covered YouTube video doesn't start its preview. When YouTube moves to the next video on its own, the video waits until spoil6 knows what it is, so autoplay can't roll into GTA 6.
 - **Shows a count.** The spoil6 icon in your toolbar shows how many things are hidden on the page you're on.
@@ -26,7 +26,7 @@ Click the spoil6 icon in your toolbar.
 
 - **On/off** switch, and **Pause for 1 hour** for when you want to look things up.
 - **What to hide:** All GTA 6 posts, or Only spoilers (GTA 6 posts about the story, missions, deaths or the ending).
-- **Hidden posts:** Cover them, or Remove them from the feed completely.
+- **Where you are:** type the last story mission you finished. Posts about later missions, or characters you haven't met yet, get covered as "Later in the story". The names are saved as scrambled codes, so the list itself doesn't spoil anything.
 - **Sites:** turn spoil6 off for any of the five sites.
 - **Always hide posts with:** your own words, like a character you don't want to hear about yet. These hide posts even when they don't say GTA.
 - **Never hide posts with:** words that always let a post through, like GTA Online.
