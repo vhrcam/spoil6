@@ -1,11 +1,6 @@
 const S = globalThis.spoil6;
 const $ = id => document.getElementById(id);
 
-const HINTS = {
-  all: 'Covers anything that mentions GTA 6 or its characters and places.',
-  spoilers: 'Covers GTA 6 posts about the story, missions, deaths or the ending.',
-};
-
 let settings;
 let page = null;
 let storyNote = '';
@@ -21,17 +16,15 @@ function statusText() {
 function progressText() {
   const known = S.story.missions;
   if (storyNote) return storyNote;
-  if (!settings.progress) return 'Type the last story mission you finished, the way the game names it. Posts about missions after it get covered.';
-  if (settings.progress >= known) return `Past mission ${settings.progress}. The list only knows the first ${known} story missions so far, so it can't tell what's later yet.`;
-  return `Past mission ${settings.progress}. Posts about later missions get covered.`;
+  if (!settings.progress) return 'Until you fill this in, every GTA 6 post gets covered. Type the last story mission you finished, the way the game names it.';
+  if (settings.progress >= known) return `Past mission ${settings.progress}. The list only knows the first ${known} missions so far, so only clear spoilers get covered.`;
+  return `Past mission ${settings.progress}. Normal GTA 6 posts show, and spoilers and later missions stay covered.`;
 }
 
 function render() {
   $('enabled').checked = settings.enabled;
   document.body.classList.toggle('off', !settings.enabled);
   $('status').textContent = statusText();
-  $('spoilersOnly').checked = settings.mode === 'spoilers';
-  $('modeHint').textContent = HINTS[settings.mode];
   $('story').hidden = !S.story?.missions;
   if (S.story?.missions) {
     $('progressHint').textContent = progressText();
@@ -76,7 +69,6 @@ $('progress').addEventListener('input', () => {
 });
 $('clearProgress').addEventListener('click', () => save({ progress: 0 }));
 $('sites').addEventListener('change', e => save({ sites: { ...settings.sites, [e.target.value]: e.target.checked } }));
-$('spoilersOnly').addEventListener('change', e => save({ mode: e.target.checked ? 'spoilers' : 'all' }));
 
 (async () => {
   settings = await S.loadSettings();

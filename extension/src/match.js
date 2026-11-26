@@ -108,7 +108,7 @@
       if (!about) return null;
       if (story.ahead) return 'later';
       if (hint.spoiler || (loosen && story.known ? spoilerPastMissions : spoiler).test(text)) return 'spoiler';
-      return settings.mode === 'all' ? 'topic' : null;
+      return at ? null : 'topic';
     };
   };
 })();

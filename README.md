@@ -25,8 +25,7 @@ GTA 6 is out, and every feed is full of it: clips from the last mission, thumbna
 Click the spoil6 icon in your toolbar.
 
 - **On/off** switch for when you want to look things up.
-- **What to hide:** All GTA 6 posts, or Only spoilers (GTA 6 posts about the story, missions, deaths or the ending).
-- **Where you are:** type the last story mission you finished. Posts about later missions, or characters you haven't met yet, get covered as "Later in the story". The names are saved as scrambled codes, so the list itself doesn't spoil anything.
+- **Where you are:** type the last story mission you finished. Until you do, every GTA 6 post gets covered. After that, normal GTA 6 posts show, and only spoilers and posts about later missions or characters you haven't met yet get covered, as "Later in the story". The names are saved as scrambled codes, so the list itself doesn't spoil anything.
 - **Sites:** turn spoil6 off for any of the five sites.
 
 Settings sync to your other computers if you're signed in to Chrome.

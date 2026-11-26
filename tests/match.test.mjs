@@ -4,9 +4,7 @@ import '../extension/src/terms.js';
 import '../extension/src/match.js';
 
 const S = globalThis.spoil6;
-const base = { mode: 'all' };
-const all = S.createMatcher(base);
-const spoilersOnly = S.createMatcher({ ...base, mode: 'spoilers' });
+const all = S.createMatcher({});
 
 test('finds GTA 6 however it is written', () => {
   for (const text of [
@@ -46,16 +44,21 @@ test('marks spoiler talk', () => {
   ]) assert.equal(all(text), 'spoiler', text);
 });
 
-test('only spoilers mode lets plain GTA 6 posts through', () => {
-  assert.equal(spoilersOnly('GTA 6 map is huge'), null);
-  assert.equal(spoilersOnly('GTA 6 ending explained'), 'spoiler');
-  assert.equal(spoilersOnly('spoil6 hides GTA 6 posts'), null);
+test('once you set where you are, plain GTA 6 posts show', () => {
+  S.story = S.makeStory([{ name: 'Opening Night' }, { name: 'Second Wind' }]);
+  const set = S.createMatcher({ progress: 1 });
+  assert.equal(set('GTA 6 map is huge'), null);
+  assert.equal(set('spoil6 hides GTA 6 posts'), null);
+  assert.equal(set('GTA 6 ending explained'), 'spoiler');
+  assert.equal(set('look at this', { topic: true }), null);
+  assert.equal(set('look at this', { topic: true, spoiler: true }), 'spoiler');
+  assert.equal(all('GTA 6 map is huge'), 'topic');
+  S.story = undefined;
 });
 
 test('hints from the site count', () => {
   assert.equal(all('look at this', { topic: true }), 'topic');
   assert.equal(all('look at this', { topic: true, spoiler: true }), 'spoiler');
-  assert.equal(spoilersOnly('look at this', { topic: true }), null);
 });
 
 test('knows the GTA subreddits', () => {
@@ -71,20 +74,19 @@ test('where you are covers posts about later missions and people', () => {
     { name: 'Second Wind', terms: ['Morgan Vale', 'Morgan'], solo: ['Morgan Vale'] },
     { name: 'Third Act', terms: ['Quinn Rowe', 'Quinn'], solo: ['Quinn Rowe'] },
   ]);
-  const early = S.createMatcher({ ...base, mode: 'spoilers', progress: 1 });
+  const early = S.createMatcher({ progress: 1 });
   assert.equal(early('GTA 6 Third Act was wild'), 'later');
   assert.equal(early('gta 6 morgan is so annoying'), 'later');
   assert.equal(early("can't believe what Quinn Rowe did"), 'later');
   assert.equal(early('the third act of the play was long'), null);
   assert.equal(early('GTA 6 Opening Night was a great mission'), null);
   assert.equal(early('GTA 6 Opening Night ending got me'), 'spoiler');
-  assert.equal(S.createMatcher({ ...base, progress: 1 })('GTA 6 Opening Night was a great mission'), 'topic');
 
-  const done = S.createMatcher({ ...base, mode: 'spoilers', progress: 3 });
+  const done = S.createMatcher({ progress: 3 });
   assert.equal(done('GTA 6 Third Act was wild'), null);
   assert.equal(done('GTA 6 Third Act was a great mission'), 'spoiler');
 
-  assert.equal(spoilersOnly('GTA 6 Third Act was wild'), null);
+  assert.equal(all('GTA 6 Third Act was wild'), 'topic');
   S.story = undefined;
 });
 

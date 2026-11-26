@@ -3,7 +3,6 @@
 
   S.defaults = {
     enabled: true,
-    mode: 'all',
     progress: 0,
     sites: { x: true, reddit: true, youtube: true, tiktok: true, instagram: true },
   };

@@ -27,10 +27,14 @@ test('starts by covering every GTA 6 post', async () => {
   assert.deepEqual(await cells(), ['Possible GTA 6 spoiler · Show', 'Mentions GTA 6 · Show', '']);
 });
 
-test('Only spoilers lets plain GTA 6 posts through', async () => {
-  await popup.getByText('Only hide spoilers').click();
+test('setting where you are lets plain GTA 6 posts through', async () => {
+  await popup.locator('#progress').fill('1');
+  await popup.locator('#progress').press('Enter');
   await settle();
   assert.deepEqual(await cells(), ['Possible GTA 6 spoiler · Show', '', '']);
+  await popup.locator('#clearProgress').click();
+  await settle();
+  assert.deepEqual(await cells(), ['Possible GTA 6 spoiler · Show', 'Mentions GTA 6 · Show', '']);
 });
 
 test('where you are takes a mission number and can be cleared', async () => {
@@ -40,7 +44,7 @@ test('where you are takes a mission number and can be cleared', async () => {
   assert.match(await popup.locator('#progressHint').textContent(), /^Past mission 2\./);
   await popup.locator('#clearProgress').click();
   await settle();
-  assert.match(await popup.locator('#progressHint').textContent(), /^Type the last story mission/);
+  assert.match(await popup.locator('#progressHint').textContent(), /^Until you fill this in/);
 });
 
 test('where you are says when it can\'t find a mission name', async () => {
@@ -48,7 +52,7 @@ test('where you are says when it can\'t find a mission name', async () => {
   await popup.locator('#progress').press('Enter');
   assert.match(await popup.locator('#progressHint').textContent(), /^Couldn't find that story mission/);
   await popup.locator('#progress').fill('');
-  assert.match(await popup.locator('#progressHint').textContent(), /^Type the last story mission/);
+  assert.match(await popup.locator('#progressHint').textContent(), /^Until you fill this in/);
 });
 
 test('the main switch turns it off', async () => {
