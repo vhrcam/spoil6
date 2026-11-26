@@ -1,6 +1,6 @@
 # spoil6
 
-A browser extension that hides GTA 6 spoilers on X, Reddit, YouTube, TikTok and Instagram until you choose to see them.
+A browser extension that hides GTA 6 spoilers on X, Reddit, YouTube, TikTok and Instagram unless you choose to see them.
 
 GTA 6 is out, and every feed is full of it: clips from the last mission, thumbnails of the ending, people posting reactions with no warning. Scrolling past them isn't enough, because by the time you see a picture or a video it's already too late. spoil6 checks every post before it shows up on your screen and covers anything about GTA 6, so you can keep using social media while you play at your own pace.
 
