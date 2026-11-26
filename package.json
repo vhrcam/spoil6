@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node --test \"tests/*.test.mjs\"",
     "test:browser": "node --test --test-concurrency=1 \"tests/browser/*.test.mjs\"",
-    "test:brave": "BROWSER_PATH='/Applications/Brave Browser.app/Contents/MacOS/Brave Browser' npm run test:browser"
+    "test:brave": "BROWSER_PATH='/Applications/Brave Browser.app/Contents/MacOS/Brave Browser' npm run test:browser",
+    "story": "node scripts/story.mjs"
   },
   "devDependencies": {
     "playwright": "1.64.1"
