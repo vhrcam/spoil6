@@ -3,8 +3,8 @@
   const site = S.sites.find(s => s.hosts.some(h => location.hostname === h || location.hostname.endsWith(`.${h}`)));
   if (!site) return;
 
-  const LABELS = { topic: 'Mentions GTA 6', spoiler: 'Possible GTA 6 spoiler', yours: 'Has a word you blocked' };
-  const GATE_TITLES = { topic: 'This page is about GTA 6', spoiler: 'This page might spoil GTA 6', yours: 'This page has a word you blocked' };
+  const LABELS = { topic: 'Mentions GTA 6', spoiler: 'Possible GTA 6 spoiler', yours: 'Has a word you blocked', later: 'Later in the story' };
+  const GATE_TITLES = { topic: 'This page is about GTA 6', spoiler: 'This page might spoil GTA 6', yours: 'This page has a word you blocked', later: 'This page is past where you are' };
   const STAR = (x, y, r) => `radial-gradient(${r}px ${r}px at ${x}% ${y}%, rgba(255, 255, 255, 0.85), transparent)`;
   const GATE_CSS = `
     :host {

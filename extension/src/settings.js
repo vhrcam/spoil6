@@ -5,6 +5,7 @@
     enabled: true,
     pausedUntil: 0,
     mode: 'all',
+    progress: 0,
     sites: { x: true, reddit: true, youtube: true, tiktok: true, instagram: true },
     blockWords: [],
     allowWords: [],

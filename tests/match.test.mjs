@@ -72,3 +72,34 @@ test('knows the GTA subreddits', () => {
   for (const name of ['r/gaming', 'r/GTAV', 'r/toronto', 'r/rockstarenergy'])
     assert.equal(S.isGtaSubreddit(name), false, name);
 });
+
+test('where you are covers posts about later missions and people', () => {
+  S.story = S.makeStory([
+    { name: 'Opening Night', terms: ['Pat'] },
+    { name: 'Second Wind', terms: ['Morgan Vale', 'Morgan'], solo: ['Morgan Vale'] },
+    { name: 'Third Act', terms: ['Quinn Rowe', 'Quinn'], solo: ['Quinn Rowe'] },
+  ]);
+  const early = S.createMatcher({ ...base, mode: 'spoilers', progress: 1 });
+  assert.equal(early('GTA 6 Third Act was wild'), 'later');
+  assert.equal(early('gta 6 morgan is so annoying'), 'later');
+  assert.equal(early("can't believe what Quinn Rowe did"), 'later');
+  assert.equal(early('the third act of the play was long'), null);
+  assert.equal(early('GTA 6 Opening Night was a great mission'), null);
+  assert.equal(early('GTA 6 Opening Night ending got me'), 'spoiler');
+  assert.equal(S.createMatcher({ ...base, progress: 1 })('GTA 6 Opening Night was a great mission'), 'topic');
+
+  const done = S.createMatcher({ ...base, mode: 'spoilers', progress: 3 });
+  assert.equal(done('GTA 6 Third Act was wild'), null);
+  assert.equal(done('GTA 6 Third Act was a great mission'), 'spoiler');
+
+  assert.equal(spoilersOnly('GTA 6 Third Act was wild'), null);
+  S.story = undefined;
+});
+
+test('finds a story mission by the name you type and keeps names scrambled', () => {
+  const story = S.makeStory([{ name: 'Opening Night' }, { name: 'Mo’s Big Day!' }]);
+  assert.equal(story.names[S.storyKey('opening   night')], 1);
+  assert.equal(story.names[S.storyKey("mo's big day")], 2);
+  assert.equal(story.names[S.storyKey('closing night')], undefined);
+  assert.doesNotMatch(JSON.stringify(story), /opening|night|big day/i);
+});
