@@ -3,7 +3,6 @@
 
   S.defaults = {
     enabled: true,
-    pausedUntil: 0,
     mode: 'all',
     progress: 0,
     sites: { x: true, reddit: true, youtube: true, tiktok: true, instagram: true },
@@ -25,5 +24,5 @@
     if (area === 'sync' && changes.settings) fn(merge(changes.settings.newValue));
   });
 
-  S.isOn = (settings, siteId) => settings.enabled && settings.pausedUntil <= Date.now() && settings.sites[siteId];
+  S.isOn = (settings, siteId) => settings.enabled && settings.sites[siteId];
 })();

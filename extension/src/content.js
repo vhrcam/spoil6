@@ -291,15 +291,11 @@
     root.dataset.spoil6Theme = dark ? 'dark' : 'light';
   }
 
-  let resumeTimer;
   function apply(next) {
     settings = next;
     match = S.createMatcher(next);
     on = S.isOn(next, site.id);
     readTheme();
-    clearTimeout(resumeTimer);
-    const wait = next.pausedUntil - Date.now();
-    if (next.enabled && wait > 0) resumeTimer = setTimeout(() => apply(settings), wait + 100);
     rescan();
   }
 

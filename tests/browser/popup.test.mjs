@@ -57,16 +57,6 @@ test('where you are says when it can\'t find a mission name', async () => {
   assert.match(await popup.locator('#progressHint').textContent(), /^Type the last story mission/);
 });
 
-test('pausing shows everything until you resume', async () => {
-  await popup.getByText('Pause for 1 hour').click();
-  await settle();
-  assert.deepEqual(await cells(), ['', '', '']);
-  assert.match(await popup.locator('#status').textContent(), /^Paused until/);
-  await popup.getByText('Resume now').click();
-  await settle();
-  assert.equal((await cells())[0], 'Possible GTA 6 spoiler · Show');
-});
-
 test('the main switch turns it off', async () => {
   await popup.locator('#enabled').uncheck();
   await settle();

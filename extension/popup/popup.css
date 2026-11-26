@@ -49,22 +49,6 @@ h1 {
   color: var(--soft);
 }
 
-.pause {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: transparent;
-  color: var(--ink);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.pause:hover {
-  background: var(--panel);
-}
-
 section {
   margin-top: 16px;
 }
