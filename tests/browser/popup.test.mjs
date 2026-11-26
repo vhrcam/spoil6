@@ -39,6 +39,24 @@ test('your own words get covered too', async () => {
   assert.equal((await cells())[2], 'Has a word you blocked · Show');
 });
 
+test('where you are takes a mission number and can be cleared', async () => {
+  await popup.locator('#progress').fill('2');
+  await popup.locator('#progress').press('Enter');
+  await settle();
+  assert.match(await popup.locator('#progressHint').textContent(), /^Past mission 2\./);
+  await popup.locator('#clearProgress').click();
+  await settle();
+  assert.match(await popup.locator('#progressHint').textContent(), /^Type the last story mission/);
+});
+
+test('where you are says when it can\'t find a mission name', async () => {
+  await popup.locator('#progress').fill('not a mission name at all');
+  await popup.locator('#progress').press('Enter');
+  assert.match(await popup.locator('#progressHint').textContent(), /^Couldn't find that story mission/);
+  await popup.locator('#progress').fill('');
+  assert.match(await popup.locator('#progressHint').textContent(), /^Type the last story mission/);
+});
+
 test('pausing shows everything until you resume', async () => {
   await popup.getByText('Pause for 1 hour').click();
   await settle();

@@ -8,6 +8,7 @@ const HINTS = {
 
 let settings;
 let page = null;
+let storyNote = '';
 
 const words = text => [...new Set(text.split(/[\n,]/).map(w => w.trim()).filter(Boolean))];
 const clock = ms => new Date(ms).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
@@ -21,6 +22,14 @@ function statusText() {
   return `Hiding ${page.count} ${page.count === 1 ? 'thing' : 'things'} on this page.`;
 }
 
+function progressText() {
+  const known = S.story.missions;
+  if (storyNote) return storyNote;
+  if (!settings.progress) return 'Type the last story mission you finished, the way the game names it. Posts about missions after it get covered.';
+  if (settings.progress >= known) return `Past mission ${settings.progress}. The list only knows the first ${known} story missions so far, so it can't tell what's later yet.`;
+  return `Past mission ${settings.progress}. Posts about later missions get covered.`;
+}
+
 function render() {
   $('enabled').checked = settings.enabled;
   document.body.classList.toggle('off', !settings.enabled);
@@ -29,6 +38,11 @@ function render() {
   $('pause').textContent = settings.pausedUntil > Date.now() ? 'Resume now' : 'Pause for 1 hour';
   for (const input of document.querySelectorAll('[name=mode]')) input.checked = settings[input.name] === input.value;
   $('modeHint').textContent = HINTS[settings.mode];
+  $('story').hidden = !S.story?.missions;
+  if (S.story?.missions) {
+    $('progressHint').textContent = progressText();
+    $('clearProgress').hidden = !settings.progress || Boolean(storyNote);
+  }
   for (const input of $('sites').querySelectorAll('input')) input.checked = settings.sites[input.value];
   for (const id of ['blockWords', 'allowWords']) {
     if (document.activeElement !== $(id)) $(id).value = settings[id].join('\n');
@@ -52,6 +66,25 @@ $('sites').innerHTML = S.sites
 
 $('enabled').addEventListener('change', e => save({ enabled: e.target.checked, pausedUntil: 0 }));
 $('pause').addEventListener('click', () => save({ pausedUntil: settings.pausedUntil > Date.now() ? 0 : Date.now() + 60 * 60 * 1000 }));
+$('progress').addEventListener('change', () => {
+  const value = $('progress').value.trim();
+  if (!value) return;
+  const mission = /^\d+$/.test(value) ? Math.min(Number(value), 999) : S.story.names[S.storyKey(value)];
+  if (mission > 0) {
+    storyNote = '';
+    $('progress').value = '';
+    save({ progress: mission });
+  } else {
+    storyNote = `Couldn't find that story mission. Check the spelling. The list only knows the first ${S.story.missions} so far.`;
+    render();
+  }
+});
+$('progress').addEventListener('input', () => {
+  if (!storyNote) return;
+  storyNote = '';
+  render();
+});
+$('clearProgress').addEventListener('click', () => save({ progress: 0 }));
 $('sites').addEventListener('change', e => save({ sites: { ...settings.sites, [e.target.value]: e.target.checked } }));
 for (const input of document.querySelectorAll('[name=mode]')) {
   input.addEventListener('change', () => save({ [input.name]: input.value }));
