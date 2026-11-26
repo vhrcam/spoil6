@@ -28,7 +28,7 @@ test('starts by covering every GTA 6 post', async () => {
 });
 
 test('Only spoilers lets plain GTA 6 posts through', async () => {
-  await popup.getByText('Only spoilers').click();
+  await popup.getByText('Only hide spoilers').click();
   await settle();
   assert.deepEqual(await cells(), ['Possible GTA 6 spoiler · Show', '', '']);
 });

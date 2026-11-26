@@ -18,9 +18,11 @@
 
   <section>
     <h2>What to hide</h2>
-    <div class="choice">
-      <label><input type="radio" name="mode" value="all"><span>All GTA 6 posts</span></label>
-      <label><input type="radio" name="mode" value="spoilers"><span>Only spoilers</span></label>
+    <div class="card">
+      <label class="row">
+        <span>Only hide spoilers</span>
+        <span class="switch small"><input type="checkbox" id="spoilersOnly"><span></span></span>
+      </label>
     </div>
     <p id="modeHint" class="hint"></p>
   </section>
@@ -33,7 +35,7 @@
 
   <section>
     <h2>Sites</h2>
-    <div id="sites" class="sites"></div>
+    <div id="sites" class="card"></div>
   </section>
 
   <script src="../src/settings.js"></script>

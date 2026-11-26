@@ -1,7 +1,5 @@
 :root {
   --bg: #150a2e;
-  --panel: #23124a;
-  --field: #1b0d3b;
   --ink: #fbefff;
   --soft: #b9a1dc;
   --line: #3a2268;
@@ -50,7 +48,7 @@ h1 {
 }
 
 section {
-  margin-top: 16px;
+  margin-top: 14px;
 }
 
 body.off section {
@@ -66,39 +64,29 @@ h2 {
   text-transform: uppercase;
 }
 
-.choice {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 3px;
-  border-radius: 10px;
-  background: var(--panel);
+.card {
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.choice label,
-.sites label {
-  position: relative;
-}
-
-.choice input,
-.sites input {
-  position: absolute;
-  opacity: 0;
-}
-
-.choice span {
-  display: block;
-  padding: 7px 6px;
-  border-radius: 8px;
-  color: var(--soft);
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 12px;
   font-weight: 600;
-  text-align: center;
   cursor: pointer;
 }
 
-.choice input:checked + span {
-  background: var(--pick);
-  color: #ffffff;
-  box-shadow: 0 0 12px rgba(143, 61, 255, 0.35);
+.row + .row {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.row:hover {
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .hint {
@@ -107,42 +95,14 @@ h2 {
   font-size: 12px;
 }
 
-.sites {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.sites span {
-  display: block;
-  padding: 6px 11px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--soft);
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.sites input:checked + span {
-  border-color: transparent;
-  background: var(--pick);
-  color: #ffffff;
-}
-
-.choice input:focus-visible + span,
-.sites input:focus-visible + span {
-  outline: 2px solid var(--focus);
-  outline-offset: 1px;
-}
-
 #progress {
   display: block;
   width: 100%;
   margin: 0;
-  padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: var(--field);
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
   color: var(--ink);
   font: inherit;
 }
@@ -169,8 +129,14 @@ h2 {
 
 .switch {
   position: relative;
+  flex: none;
   width: 40px;
   height: 24px;
+}
+
+.switch.small {
+  width: 34px;
+  height: 20px;
 }
 
 .switch input {
@@ -209,6 +175,15 @@ h2 {
 
 .switch input:checked + span::after {
   transform: translateX(16px);
+}
+
+.switch.small span::after {
+  width: 14px;
+  height: 14px;
+}
+
+.switch.small input:checked + span::after {
+  transform: translateX(14px);
 }
 
 .switch input:focus-visible + span {

@@ -30,7 +30,7 @@ function render() {
   $('enabled').checked = settings.enabled;
   document.body.classList.toggle('off', !settings.enabled);
   $('status').textContent = statusText();
-  for (const input of document.querySelectorAll('[name=mode]')) input.checked = settings[input.name] === input.value;
+  $('spoilersOnly').checked = settings.mode === 'spoilers';
   $('modeHint').textContent = HINTS[settings.mode];
   $('story').hidden = !S.story?.missions;
   if (S.story?.missions) {
@@ -52,7 +52,7 @@ async function save(patch) {
 }
 
 $('sites').innerHTML = S.sites
-  .map(site => `<label><input type="checkbox" value="${site.id}"><span>${site.name}</span></label>`)
+  .map(site => `<label class="row"><span>${site.name}</span><span class="switch small"><input type="checkbox" value="${site.id}"><span></span></span></label>`)
   .join('');
 
 $('enabled').addEventListener('change', e => save({ enabled: e.target.checked }));
@@ -76,9 +76,7 @@ $('progress').addEventListener('input', () => {
 });
 $('clearProgress').addEventListener('click', () => save({ progress: 0 }));
 $('sites').addEventListener('change', e => save({ sites: { ...settings.sites, [e.target.value]: e.target.checked } }));
-for (const input of document.querySelectorAll('[name=mode]')) {
-  input.addEventListener('change', () => save({ [input.name]: input.value }));
-}
+$('spoilersOnly').addEventListener('change', e => save({ mode: e.target.checked ? 'spoilers' : 'all' }));
 
 (async () => {
   settings = await S.loadSettings();
